@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sistema de Tratativa - Global Rastreamento</title>
+  <style>
+    :root{--bg:#f6fbff;--card:#fff;--accent:#0b63d6;--muted:#6b7280;--ok:#059669;--warn:#d97706;--danger:#ef4444;--yellow:#f5c246}
+    body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);margin:0;padding:24px;color:#0f172a}
+    .container{max-width:1100px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{font-size:20px;margin:0}
+    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(2,6,23,0.06);margin-bottom:12px}
+    .grid{display:grid;gap:12px}
+    .grid.cols-3{grid-template-columns:1fr 360px 240px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input,select,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6eef7;font-size:14px}
+    button{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
+    button.yellow{background:var(--yellow);color:#08304a}
+    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,99,214,0.12)}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:8px;text-align:left;border-bottom:1px solid #f1f5f9;font-size:14px}
+    .muted{color:var(--muted);font-size:13px}
+    .pill{display:inline-block;padding:6px 8px;border-radius:999px;font-size:13px}
+    .pill.ok{background:rgba(5,150,105,0.12);color:var(--ok)}
+    .pill.warn{background:rgba(217,119,6,0.12);color:var(--warn)}
+    .pill.dead{background:rgba(239,68,68,0.12);color:var(--danger)}
+    .actions button{margin-right:6px}
+    .small{font-size:13px}
+    .log-entry{border-left:3px solid #e6eef7;padding:10px;margin-bottom:8px;border-radius:6px}
+    .flex{display:flex;gap:8px;align-items:center}
+    footer{margin-top:18px;text-align:center;color:var(--muted)}
+    @media (max-width:920px){.grid.cols-3{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Assistente Virtual Daniel Ibraim — Tratativa de dispositivos offline</h1>
+        <div class="muted">Fluxo: detectar > enviar reset SMS > reset SIM > contatar cliente > registrar resultado</div>
+      </div>
+      <div>
+        <button id="runScan">Verificar offline agora</button>
+      </div>
+    </header>
+
+    <div class="grid cols-3">
+      <div class="card">
+        <h3>Cadastro / Dispositivos</h3>
+        <div style="margin-bottom:8px" class="muted small">Adicione dispositivos e informe o último "last seen" (data/hora).</div>
+        <label>Placa / Identificador</label>
+        <input id="deviceIdInput" placeholder="Ex: ABC1D23" />
+        <label>IMEI / ID</label>
+        <input id="imeiInput" placeholder="Ex: 868123456789012" />
+        <label>Número da linha (chip)</label>
+        <input id="simInput" placeholder="Ex: 75999998888" />
+        <label>Contato do cliente</label>
+        <input id="contactInput" placeholder="Ex: 75988887777" />
+        <label>Último contato (YYYY-MM-DD HH:MM)</label>
+        <input id="lastSeenInput" placeholder="2025-10-13 14:25" />
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button id="addDeviceBtn">Adicionar / Atualizar</button>
+          <button id="clearAll" class="ghost">Limpar tudo</button>
+        </div>
+        <hr />
+        <div class="small muted">Exportar / importar</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="exportCsv" class="ghost">Exportar CSV</button>
+          <button id="importSample" class="ghost">Importar exemplo</button>
+        </div>
+      </div>
+
+      <div class="card" id="scanCard">
+        <h3>Dispositivos offline (mais de 24h)</h3>
+        <div id="offlineList" style="max-height:420px;overflow:auto"></div>
+      </div>
+
+      <div class="card">
+        <h3>Log de tratativas</h3>
+        <div id="logList" style="max-height:420px;overflow:auto"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Histórico completo dos dispositivos</h3>
+      <table>
+        <thead><tr><th>Placa</th><th>IMEI</th><th>Último contato</th><th>Status</th><th>Ações</th></tr></thead>
+        <tbody id="devicesTable"></tbody>
+      </table>
+    </div>
+
+    <footer class="muted">Use como protótipo: integrações reais (SMS, API da plataforma e operadora) podem ser ligadas aos pontos marcados como "Simulado".</footer>
+  </div>
+
+  <script>
+    const DEV_KEY = 'gr_devices_v1';
+    const LOG_KEY = 'gr_logs_v1';
+
+    const FACILITA_USER = 'daniel02';
+    const FACILITA_PASS = '486245pcj';
+    const FACILITA_SENDER = '55981243015';
+
+    function loadDevices(){ try{ return JSON.parse(localStorage.getItem(DEV_KEY)||'[]') }catch(e){return[]} }
+    function saveDevices(arr){ localStorage.setItem(DEV_KEY, JSON.stringify(arr)) }
+    function loadLogs(){ try{ return JSON.parse(localStorage.getItem(LOG_KEY)||'[]') }catch(e){return[]} }
+    function saveLogs(arr){ localStorage.setItem(LOG_KEY, JSON.stringify(arr)) }
+
+    function pushLog(obj){ const logs = loadLogs(); const entry = {when:obj.when||new Date().toISOString(), deviceId:obj.deviceId, actionType:obj.actionType||'Ação', result:obj.result||'', notes:obj.notes||''}; logs.push(entry); saveLogs(logs); renderLogs(); }
+
+    async function sendSmsViaFacilita(to, message){
+      const url = `http://api.facilitamovel.com.br/api/dlrByExternalKeyJson.ft?user=${FACILITA_USER}&pass=${FACILITA_PASS}&to=${to}&msg=${encodeURIComponent(message)}&from=${FACILITA_SENDER}`;
+      try{
+        const resp = await fetch(url);
+        const data = await resp.json();
+        if(data.status && data.status.toLowerCase()=='ok'){
+          return 'Enviado';
+        } else {
+          console.error('Erro Facilita:', data);
+          return 'Erro';
+        }
+      }catch(e){
+        console.error('Erro envio SMS:', e);
+        return 'Erro';
+      }
+    }
+
+    async function simulateSendSms(deviceId){
+      const escolha = prompt('Digite 1 para enviar RESET ou 2 para enviar mensagem ao cliente');
+      const dev = loadDevices().find(d=>d.id===deviceId);
+      if(!dev){ alert('Dispositivo não encontrado'); return; }
+      const destino = dev.contact.startsWith('55') ? dev.contact : '55'+dev.contact;
+     
