@@ -1,39 +1,179 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sistema de Tratativa - Global Rastreamento</title>
-  <style>
-    :root{--bg:#f6fbff;--card:#fff;--accent:#0b63d6;--muted:#6b7280;--ok:#059669;--warn:#d97706;--danger:#ef4444;--yellow:#f5c246}
-    body{font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);margin:0;padding:24px;color:#0f172a}
-    .container{max-width:1100px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-    h1{font-size:20px;margin:0}
-    .card{background:var(--card);border-radius:12px;padding:16px;box-shadow:0 4px 20px rgba(2,6,23,0.06);margin-bottom:12px}
-    .grid{display:grid;gap:12px}
-    .grid.cols-3{grid-template-columns:1fr 360px 240px}
-    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-    input,select,textarea{width:100%;padding:8px;border-radius:8px;border:1px solid #e6eef7;font-size:14px}
-    button{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;border:0;cursor:pointer}
-    button.yellow{background:var(--yellow);color:#08304a}
-    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(11,99,214,0.12)}
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:8px;text-align:left;border-bottom:1px solid #f1f5f9;font-size:14px}
-    .muted{color:var(--muted);font-size:13px}
-    .pill{display:inline-block;padding:6px 8px;border-radius:999px;font-size:13px}
-    .pill.ok{background:rgba(5,150,105,0.12);color:var(--ok)}
-    .pill.warn{background:rgba(217,119,6,0.12);color:var(--warn)}
-    .pill.dead{background:rgba(239,68,68,0.12);color:var(--danger)}
-    .actions button{margin-right:6px}
-    .small{font-size:13px}
-    .log-entry{border-left:3px solid #e6eef7;padding:10px;margin-bottom:8px;border-radius:6px}
-    .flex{display:flex;gap:8px;align-items:center}
-    footer{margin-top:18px;text-align:center;color:var(--muted)}
-    @media (max-width:920px){.grid.cols-3{grid-template-columns:1fr}}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Log de Tratativas - Global Rastreamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0077ff;
+  --blue-2:#004aad;
+  --yellow:#ffc107;
+  --green:#2ecc71;
+  --danger:#e74c3c;
+  --bg:#0b0d16;
+  --card:#111827;
+  --text:#f1f1f1;
+  --muted:#888;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.container{max-width:1100px;width:100%;background:var(--card);padding:22px;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,0.5);display:none}
+header{text-align:center;padding:16px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:10px;font-size:1.2rem;font-weight:700;margin-bottom:18px}
+.guia-operacional{background:linear-gradient(180deg,var(--blue-2),#002a5c);padding:16px;border-radius:10px;margin-bottom:18px}
+.guia-operacional h2{color:var(--yellow);margin-bottom:10px}
+.guia-operacional ol{margin:0;padding-left:18px;line-height:1.5}
+.guia-operacional blockquote{background:rgba(255,255,255,0.1);border-left:4px solid var(--yellow);padding:10px;margin:10px 0;border-radius:6px}
+h1{color:var(--yellow);text-align:center;margin:14px 0 8px 0;font-size:1.3rem}
+label{font-weight:600;margin-bottom:6px;display:block}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text)}
+textarea{resize:vertical;min-height:64px}
+.btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.secondary{background:var(--yellow);color:#000}
+.btn.green{background:var(--green);color:#fff}
+.btn.danger{background:var(--danger);color:#fff}
+.btn.ghost{background:transparent;color:var(--yellow);border:1px solid var(--yellow)}
+form{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
+.full{grid-column:1/-1}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;grid-column:1/-1}
+#busca{padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text);width:100%;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:10px;border:1px solid #333;text-align:left;vertical-align:middle;font-size:0.9rem}
+th{background:var(--blue-2);color:#fff}
+tr:nth-child(even){background:#121829}
+.actions-cell{display:flex;gap:6px;flex-wrap:wrap}
+.row-btn{padding:6px 8px;border-radius:6px;border:0;cursor:pointer;font-weight:600;font-size:0.85rem}
+.row-btn.client{background:var(--yellow);color:#000}
+.row-btn.follow{background:var(--blue);color:#fff}
+.row-btn.ok{background:var(--green);color:#fff}
+.row-btn.del{background:var(--danger);color:#fff}
+.mensagens-panel{margin-top:16px;border-radius:10px;padding:12px;background:#1a1f2e;display:grid;grid-template-columns:1fr 220px;gap:12px}
+.mensagens-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.mensagens-area textarea{width:100%;min-height:84px;padding:10px;border-radius:8px;border:1px solid #333;background:#0b0f1a;color:var(--text)}
+.copy-btn{padding:8px;border-radius:8px;border:0;cursor:pointer;font-weight:700;background:var(--blue);color:#fff}
+.msg-info{font-size:0.85rem;color:var(--muted);margin-top:6px}
+@media(max-width:880px){form{grid-template-columns:1fr}.mensagens-panel{grid-template-columns:1fr}}
+/* LOGIN */
+.login-box{background:#0b0f1a;padding:30px;border-radius:10px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 15px #0008}
+.login-box h2{margin-bottom:15px;color:var(--yellow)}
+.login-box input{width:100%;padding:10px;border-radius:8px;margin-bottom:12px;border:1px solid #333;background:#1a1f2e;color:var(--text)}
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px #000}
+.whatsapp img{width:35px;height:35px}
+</style>
 </head>
 <body>
+
+<!-- LOGIN -->
+<div class="login-box" id="loginBox">
+<h2>🔐 Login - Global Rastreamento</h2>
+<p style="font-size:0.9rem;color:var(--muted)">Acesse pelo navegador:<br><b>file:///C:/painel.html</b></p>
+<input type="text" id="user" placeholder="Usuário">
+<input type="password" id="pass" placeholder="Senha">
+<button class="btn primary" onclick="login()">Entrar</button>
+<p style="margin-top:10px;font-size:0.85rem;color:var(--muted)">Usuário: <b>admin</b> | Senha: <b>1234</b></p>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="container" id="painel">
+<header>🛰️ Log de Tratativas - Global Rastreamento</header>
+
+<div class="guia-operacional">
+<h2>🚦 Procedimento Operacional</h2>
+<ol>
+<li>Gestor acessa a plataforma e lança veículos sem comunicação (+24h).</li>
+<li>Registra placa, cliente, chip, IMEI e data/hora.</li>
+<li>Mensagem exemplo:
+<blockquote>Olá [Cliente]! O veículo [Placa] está sem comunicação há mais de 24h. Poderia informar se: 1️⃣ Está na oficina 2️⃣ Teve bateria desligada 3️⃣ Outro motivo.</blockquote></li>
+<li>Registra retorno do cliente e ação técnica.</li>
+</ol>
+</div>
+
+<h1>Gestão de Tratativas</h1>
+<div class="form-actions">
+<button class="btn primary" id="exportar-pdf">📄 Exportar PDF</button>
+<button class="btn danger" id="limpar-historico">🗑️ Limpar Histórico</button>
+</div>
+
+<form id="tratativa-form">
+<div><label>Placa / Veículo</label><input id="veiculo" required></div>
+<div><label>Dispositivo (IMEI)</label><input id="dispositivo" required></div>
+<div><label>Número do Chip</label><input id="linha" required></div>
+<div><label>Cliente</label><input id="cliente" required></div>
+<div><label>Ação Tomada</label>
+<select id="acao" required>
+<option value="">Selecione...</option><option>Reset via SMS</option><option>Reset do Chip</option><option>Contato com Cliente</option><option>Outros</option>
+</select></div>
+<div><label>Status</label>
+<select id="status" required>
+<option value="">Selecione...</option><option>Resolvido</option><option>Pendente</option><option>Aguardando Retorno</option>
+</select></div>
+<div class="full"><label>Observações</label><textarea id="observacoes"></textarea></div>
+<div class="form-actions">
+<button type="submit" class="btn primary">Registrar</button>
+<a href="https://smartmanager2.smartsim.com.br/" target="_blank" class="btn ghost">SmartSim</a>
+<a href="https://veye.com.br/veye/dispositivos" target="_blank" class="btn ghost">Veye</a>
+<a href="https://app.brcaptura.com.br/login" target="_blank" class="btn ghost">BR Captura</a>
+</div>
+</form>
+
+<input id="busca" placeholder="Pesquisar no histórico...">
+<table id="tratativas-tabela"><thead><tr><th>Data</th><th>Veículo</th><th>Dispositivo</th><th>Linha</th><th>Cliente</th><th>Ação</th><th>Status</th><th>Obs</th><th>Ações</th></tr></thead><tbody></tbody></table>
+
+<div class="mensagens-panel">
+<div class="mensagens-area">
+<div class="mensagens-actions">
+<button class="btn secondary" id="btn-gerar-inicial">📩 Inicial</button>
+<button class="btn primary" id="btn-gerar-follow">🛠️ Agendar</button>
+<button class="btn green" id="btn-gerar-rest">✅ Restabelecida</button>
+</div>
+<textarea id="mensagemAutomatica" readonly></textarea>
+<button class="copy-btn" id="copiar-mensagem">📋 Copiar</button>
+<div class="msg-info" id="mensagem-info">Nenhuma mensagem gerada.</div>
+</div>
+<div>
+<strong>Última tratativa</strong>
+<div id="ultima-tratativa" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">— nenhuma —</div>
+</div>
+</div>
+</div>
+
+<!-- WhatsApp -->
+<a class="whatsapp" href="https://wa.me/5575988190527" target="_blank" title="Fale conosco no WhatsApp">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+function login(){
+const u=document.getElementById('user').value.trim(),p=document.getElementById('pass').value.trim();
+if(u==="admin"&&p==="1234"){document.getElementById('loginBox').style.display="none";document.getElementById('painel').style.display="block";}
+else alert("Usuário ou senha incorretos!");}
+
+document.addEventListener('DOMContentLoaded',()=>{
+const form=document.getElementById('tratativa-form'),tbody=document.querySelector('#tratativas-tabela tbody'),busca=document.getElementById('busca'),ultima=document.getElementById('ultima-tratativa');
+let dados=JSON.parse(localStorage.getItem('tratativas'))||[];
+
+function atualizarUltima(){ultima.textContent=dados.length?`${dados.at(-1).data} | ${dados.at(-1).veiculo} | ${dados.at(-1).cliente}`:"— nenhuma —";}
+function render(f=""){tbody.innerHTML="";dados.filter(d=>f==""||Object.values(d).some(v=>v.toLowerCase().includes(f.toLowerCase()))).forEach((t,i)=>{const r=tbody.insertRow();r.insertCell(0).textContent=t.data;r.insertCell(1).textContent=t.veiculo;r.insertCell(2).textContent=t.dispositivo;r.insertCell(3).textContent=t.linha;r.insertCell(4).textContent=t.cliente;r.insertCell(5).textContent=t.acao;r.insertCell(6).textContent=t.status;r.insertCell(7).textContent=t.observacoes;const a=r.insertCell(8);a.className="actions-cell";a.innerHTML=`<button class='row-btn client'>Cliente</button><button class='row-btn follow'>Agendar</button><button class='row-btn ok'>Restabelecido</button><button class='row-btn del'>Excluir</button>`});atualizarUltima();}
+form.onsubmit=e=>{e.preventDefault();const n={data:new Date().toLocaleString("pt-BR"),veiculo:veiculo.value.trim(),dispositivo:dispositivo.value.trim(),linha:linha.value.trim(),cliente:cliente.value.trim(),acao:acao.value,status:status.value,observacoes:observacoes.value.trim()};dados.push(n);localStorage.setItem("tratativas",JSON.stringify(dados));form.reset();render();alert("Tratativa registrada!");};
+tbody.onclick=e=>{if(!e.target.classList.contains("row-btn"))return;const i=e.target.closest("tr").rowIndex-1,t=dados[i];if(e.target.classList.contains("del")&&confirm("Excluir?")){dados.splice(i,1);localStorage.setItem("tratativas",JSON.stringify(dados));render();}else if(e.target.classList.contains("client"))msg("inicial",t);else if(e.target.classList.contains("follow"))msg("agendar",t);else if(e.target.classList.contains("ok"))msg("restabelecido",t);}
+busca.oninput=e=>render(e.target.value);
+document.getElementById("limpar-historico").onclick=()=>{if(confirm("Limpar histórico?")){dados=[];localStorage.removeItem("tratativas");render();}};
+document.getElementById("exportar-pdf").onclick=()=>{const{jsPDF}=window.jspdf;const d=new jsPDF();d.text("Relatório de Tratativas - Global Rastreamento",14,20);let y=30;dados.forEach(t=>{d.text(`${t.data} | ${t.veiculo} | ${t.cliente} | ${t.status}`,14,y);y+=6;if(y>270){d.addPage();y=20;}});d.save("tratativas_global.pdf");};
+
+const txt=document.getElementById("mensagemAutomatica"),info=document.getElementById("mensagem-info");
+function msg(tipo,t={veiculo:"[Veículo]",cliente:"[Cliente]"}){let m="";if(tipo==="inicial")m=`Olá ${t.cliente}! O veículo ${t.veiculo} está sem comunicação há mais de 24h. Poderia informar o motivo?`;if(tipo==="agendar")m=`Podemos agendar manutenção para verificar o dispositivo ${t.veiculo}.`;if(tipo==="restabelecido")m=`Comunicação do veículo ${t.veiculo} restabelecida.`;txt.value=m;info.textContent=`Mensagem tipo '${tipo}' gerada.`;}
+document.getElementById("btn-gerar-inicial").onclick=()=>msg("inicial");
+document.getElementById("btn-gerar-follow").onclick=()=>msg("agendar");
+document.getElementById("btn-gerar-rest").onclick=()=>msg("restabelecido");
+document.getElementById("copiar-mensagem").onclick=()=>{navigator.clipboard.writeText(txt.value);alert("Mensagem copiada!");};
+render();
+});
+</script>
+</body>
+</html>
   <div class="container">
     <header>
       <div>
