@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Log de Tratativas - Global Rastreamento</title>
+<title>Central de Tratativas – Global Tecnologia</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -18,56 +18,56 @@
   --muted:#888;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:"Inter",sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-.container{max-width:1100px;width:100%;background:var(--card);padding:22px;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,0.5);display:none}
-header{text-align:center;padding:16px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:10px;font-size:1.2rem;font-weight:700;margin-bottom:18px}
-.guia-operacional{background:linear-gradient(180deg,var(--blue-2),#002a5c);padding:16px;border-radius:10px;margin-bottom:18px}
-.guia-operacional h2{color:var(--yellow);margin-bottom:10px}
-.guia-operacional ol{margin:0;padding-left:18px;line-height:1.5}
-.guia-operacional blockquote{background:rgba(255,255,255,0.1);border-left:4px solid var(--yellow);padding:10px;margin:10px 0;border-radius:6px}
-h1{color:var(--yellow);text-align:center;margin:14px 0 8px 0;font-size:1.3rem}
-label{font-weight:600;margin-bottom:6px;display:block}
-input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text)}
-textarea{resize:vertical;min-height:64px}
-.btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
-.btn.primary{background:var(--blue);color:#fff}
-.btn.secondary{background:var(--yellow);color:#000}
-.btn.green{background:var(--green);color:#fff}
-.btn.danger{background:var(--danger);color:#fff}
-.btn.ghost{background:transparent;color:var(--yellow);border:1px solid var(--yellow)}
-form{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}
-.full{grid-column:1/-1}
-.form-actions{display:flex;gap:10px;flex-wrap:wrap;grid-column:1/-1}
-#busca{padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text);width:100%;margin-bottom:10px}
-table{width:100%;border-collapse:collapse;margin-top:12px}
-th,td{padding:10px;border:1px solid #333;text-align:left;vertical-align:middle;font-size:0.9rem}
-th{background:var(--blue-2);color:#fff}
-tr:nth-child(even){background:#121829}
-.actions-cell{display:flex;gap:6px;flex-wrap:wrap}
-.row-btn{padding:6px 8px;border-radius:6px;border:0;cursor:pointer;font-weight:600;font-size:0.85rem}
-.row-btn.client{background:var(--yellow);color:#000}
-.row-btn.follow{background:var(--blue);color:#fff}
-.row-btn.ok{background:var(--green);color:#fff}
-.row-btn.del{background:var(--danger);color:#fff}
-.mensagens-panel{margin-top:16px;border-radius:10px;padding:12px;background:#1a1f2e;display:grid;grid-template-columns:1fr 220px;gap:12px}
-.mensagens-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.mensagens-area textarea{width:100%;min-height:84px;padding:10px;border-radius:8px;border:1px solid #333;background:#0b0f1a;color:var(--text)}
-.copy-btn{padding:8px;border-radius:8px;border:0;cursor:pointer;font-weight:700;background:var(--blue);color:#fff}
-.msg-info{font-size:0.85rem;color:var(--muted);margin-top:6px}
-@media(max-width:880px){form{grid-template-columns:1fr}.mensagens-panel{grid-template-columns:1fr}}
-/* LOGIN */
-.login-box{background:#0b0f1a;padding:30px;border-radius:10px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 15px #0008}
-.login-box h2{margin-bottom:15px;color:var(--yellow)}
-.login-box input{width:100%;padding:10px;border-radius:8px;margin-bottom:12px;border:1px solid #333;background:#1a1f2e;color:var(--text)}
-.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px #000}
-.whatsapp img{width:35px;height:35px}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;}
+header{width:100%;text-align:center;padding:16px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:10px;font-size:1.4rem;font-weight:700;margin-bottom:18px;box-shadow:0 5px 15px rgba(0,0,0,0.5);}
+.container{max-width:1200px;width:100%;background:var(--card);padding:22px;border-radius:14px;box-shadow:0 8px 25px rgba(0,0,0,0.5);display:none;}
+.guia-operacional{background:linear-gradient(180deg,var(--blue-2),#002a5c);padding:16px;border-radius:10px;margin-bottom:18px;}
+.guia-operacional h2{color:var(--yellow);margin-bottom:10px;}
+.guia-operacional ol{margin:0;padding-left:18px;line-height:1.6;}
+.guia-operacional blockquote{background:rgba(255,255,255,0.1);border-left:4px solid var(--yellow);padding:10px;margin:10px 0;border-radius:6px;}
+h1{color:var(--yellow);text-align:center;margin:14px 0 12px 0;font-size:1.4rem;}
+label{font-weight:600;margin-bottom:6px;display:block;}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text);}
+textarea{resize:vertical;min-height:64px;}
+.btn{padding:10px 14px;border-radius:8px;border:0;cursor:pointer;font-weight:700;transition:0.2s;}
+.btn:hover{opacity:0.9;}
+.btn.primary{background:var(--blue);color:#fff;}
+.btn.secondary{background:var(--yellow);color:#000;}
+.btn.green{background:var(--green);color:#fff;}
+.btn.danger{background:var(--danger);color:#fff;}
+.btn.ghost{background:transparent;color:var(--yellow);border:1px solid var(--yellow);}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;}
+form{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);}
+.full{grid-column:1/-1;}
+#busca,#filtro-status,#filtro-cliente,#filtro-veiculo{padding:10px;border-radius:8px;border:1px solid #333;background:#1a1f2e;color:var(--text);}
+table{width:100%;border-collapse:collapse;margin-top:12px;}
+th,td{padding:10px;border:1px solid #333;text-align:left;font-size:0.9rem;vertical-align:middle;}
+th{background:var(--blue-2);color:#fff;}
+tr:nth-child(even){background:#121829;}
+.actions-cell{display:flex;gap:6px;flex-wrap:wrap;}
+.row-btn{padding:6px 8px;border-radius:6px;border:0;cursor:pointer;font-weight:600;font-size:0.85rem;}
+.row-btn.client{background:var(--yellow);color:#000;}
+.row-btn.follow{background:var(--blue);color:#fff;}
+.row-btn.ok{background:var(--green);color:#fff;}
+.row-btn.del{background:var(--danger);color:#fff;}
+.mensagens-panel{margin-top:16px;border-radius:10px;padding:12px;background:#1a1f2e;display:grid;grid-template-columns:1fr 220px;gap:12px;}
+.mensagens-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
+.mensagens-area textarea{width:100%;min-height:100px;padding:10px;border-radius:8px;border:1px solid #333;background:#0b0f1a;color:var(--text);}
+.copy-btn{padding:8px;border-radius:8px;border:0;cursor:pointer;font-weight:700;background:var(--blue);color:#fff;margin-top:6px;}
+.msg-info{font-size:0.85rem;color:var(--muted);margin-top:6px;}
+.login-box{background:#0b0f1a;padding:30px;border-radius:10px;max-width:360px;width:100%;text-align:center;box-shadow:0 0 15px #0008;}
+.login-box h2{margin-bottom:15px;color:var(--yellow);}
+.login-box input{width:100%;padding:10px;border-radius:8px;margin-bottom:12px;border:1px solid #333;background:#1a1f2e;color:var(--text);}
+.whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px #000;}
+.whatsapp img{width:35px;height:35px;}
+@media(max-width:880px){form{grid-template-columns:1fr}.mensagens-panel{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="login-box" id="loginBox">
-<h2>🔐 Login - Global Rastreamento</h2>
+<h2>Login - Global Tecnologia</h2>
 <p style="font-size:0.9rem;color:var(--muted)">Acesse pelo navegador:<br><b>file:///C:/painel.html</b></p>
 <input type="text" id="user" placeholder="Usuário">
 <input type="password" id="pass" placeholder="Senha">
@@ -77,23 +77,23 @@ tr:nth-child(even){background:#121829}
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container" id="painel">
-<header>🛰️ Log de Tratativas - Global Rastreamento</header>
+<header>Central de Tratativas – Global Tecnologia</header>
 
 <div class="guia-operacional">
-<h2>🚦 Procedimento Operacional</h2>
+<h2>Procedimento Operacional</h2>
 <ol>
-<li>Gestor acessa a plataforma e lança veículos sem comunicação (+24h).</li>
-<li>Registra placa, cliente, chip, IMEI e data/hora.</li>
-<li>Mensagem exemplo:
-<blockquote>Olá [Cliente]! O veículo [Placa] está sem comunicação há mais de 24h. Poderia informar se: 1️⃣ Está na oficina 2️⃣ Teve bateria desligada 3️⃣ Outro motivo.</blockquote></li>
-<li>Registra retorno do cliente e ação técnica.</li>
+<li>Registrar veículos sem comunicação (+24h).</li>
+<li>Anotar placa, cliente, chip, IMEI e data/hora.</li>
+<li>Mensagem padrão enviada ao cliente para coleta de informações.</li>
+<li>Registrar retorno do cliente e ação técnica.</li>
 </ol>
 </div>
 
 <h1>Gestão de Tratativas</h1>
+
 <div class="form-actions">
-<button class="btn primary" id="exportar-pdf">📄 Exportar PDF</button>
-<button class="btn danger" id="limpar-historico">🗑️ Limpar Histórico</button>
+<button class="btn primary" id="exportar-pdf">Exportar PDF Detalhado</button>
+<button class="btn danger" id="limpar-historico">Limpar Histórico</button>
 </div>
 
 <form id="tratativa-form">
@@ -103,14 +103,21 @@ tr:nth-child(even){background:#121829}
 <div><label>Cliente</label><input id="cliente" required></div>
 <div><label>Ação Tomada</label>
 <select id="acao" required>
-<option value="">Selecione...</option><option>Reset via SMS</option><option>Reset do Chip</option><option>Contato com Cliente</option><option>Outros</option>
+<option value="">Selecione...</option>
+<option>Reset via SMS</option>
+<option>Reset do Chip</option>
+<option>Contato com Cliente</option>
+<option>Outros</option>
 </select></div>
 <div><label>Status</label>
 <select id="status" required>
-<option value="">Selecione...</option><option>Resolvido</option><option>Pendente</option><option>Aguardando Retorno</option>
+<option value="">Selecione...</option>
+<option>Resolvido</option>
+<option>Pendente</option>
+<option>Aguardando Retorno</option>
 </select></div>
 <div class="full"><label>Observações</label><textarea id="observacoes"></textarea></div>
-<div class="form-actions">
+<div class="form-actions full">
 <button type="submit" class="btn primary">Registrar</button>
 <a href="https://smartmanager2.smartsim.com.br/" target="_blank" class="btn ghost">SmartSim</a>
 <a href="https://veye.com.br/veye/dispositivos" target="_blank" class="btn ghost">Veye</a>
@@ -118,18 +125,34 @@ tr:nth-child(even){background:#121829}
 </div>
 </form>
 
-<input id="busca" placeholder="Pesquisar no histórico...">
-<table id="tratativas-tabela"><thead><tr><th>Data</th><th>Veículo</th><th>Dispositivo</th><th>Linha</th><th>Cliente</th><th>Ação</th><th>Status</th><th>Obs</th><th>Ações</th></tr></thead><tbody></tbody></table>
+<!-- Filtros Avançados -->
+<div class="form-actions full">
+<input id="busca" placeholder="Pesquisar...">
+<select id="filtro-status"><option value="">Filtrar por Status</option><option>Resolvido</option><option>Pendente</option><option>Aguardando Retorno</option></select>
+<input id="filtro-cliente" placeholder="Filtrar por Cliente">
+<input id="filtro-veiculo" placeholder="Filtrar por Veículo">
+</div>
 
+<table id="tratativas-tabela">
+<thead>
+<tr>
+<th>Data</th><th>Veículo</th><th>Dispositivo</th><th>Linha</th>
+<th>Cliente</th><th>Ação</th><th>Status</th><th>Observações</th><th>Ações</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+
+<!-- Mensagens Automáticas -->
 <div class="mensagens-panel">
 <div class="mensagens-area">
 <div class="mensagens-actions">
-<button class="btn secondary" id="btn-gerar-inicial">📩 Inicial</button>
-<button class="btn primary" id="btn-gerar-follow">🛠️ Agendar</button>
-<button class="btn green" id="btn-gerar-rest">✅ Restabelecida</button>
+<button class="btn secondary" id="btn-gerar-inicial">Sem Comunicação</button>
+<button class="btn primary" id="btn-gerar-follow">Agendar Suporte</button>
+<button class="btn green" id="btn-gerar-rest">Comunicação Normalizada</button>
 </div>
 <textarea id="mensagemAutomatica" readonly></textarea>
-<button class="copy-btn" id="copiar-mensagem">📋 Copiar</button>
+<button class="copy-btn" id="copiar-mensagem">Copiar Mensagem</button>
 <div class="msg-info" id="mensagem-info">Nenhuma mensagem gerada.</div>
 </div>
 <div>
@@ -137,137 +160,194 @@ tr:nth-child(even){background:#121829}
 <div id="ultima-tratativa" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">— nenhuma —</div>
 </div>
 </div>
-</div>
 
-<!-- WhatsApp -->
 <a class="whatsapp" href="https://wa.me/5575988190527" target="_blank" title="Fale conosco no WhatsApp">
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+// LOGIN
 function login(){
-const u=document.getElementById('user').value.trim(),p=document.getElementById('pass').value.trim();
-if(u==="admin"&&p==="1234"){document.getElementById('loginBox').style.display="none";document.getElementById('painel').style.display="block";}
-else alert("Usuário ou senha incorretos!");}
+  const u=document.getElementById('user').value.trim(),
+        p=document.getElementById('pass').value.trim();
+  if(u==="admin"&&p==="1234"){
+    document.getElementById('loginBox').style.display="none";
+    document.getElementById('painel').style.display="block";
+  }else alert("Usuário ou senha incorretos!");
+}
 
+// APP
 document.addEventListener('DOMContentLoaded',()=>{
-const form=document.getElementById('tratativa-form'),tbody=document.querySelector('#tratativas-tabela tbody'),busca=document.getElementById('busca'),ultima=document.getElementById('ultima-tratativa');
+const form=document.getElementById('tratativa-form'),
+      tbody=document.querySelector('#tratativas-tabela tbody'),
+      busca=document.getElementById('busca'),
+      filtroStatus=document.getElementById('filtro-status'),
+      filtroCliente=document.getElementById('filtro-cliente'),
+      filtroVeiculo=document.getElementById('filtro-veiculo'),
+      ultima=document.getElementById('ultima-tratativa');
+
 let dados=JSON.parse(localStorage.getItem('tratativas'))||[];
 
 function atualizarUltima(){ultima.textContent=dados.length?`${dados.at(-1).data} | ${dados.at(-1).veiculo} | ${dados.at(-1).cliente}`:"— nenhuma —";}
-function render(f=""){tbody.innerHTML="";dados.filter(d=>f==""||Object.values(d).some(v=>v.toLowerCase().includes(f.toLowerCase()))).forEach((t,i)=>{const r=tbody.insertRow();r.insertCell(0).textContent=t.data;r.insertCell(1).textContent=t.veiculo;r.insertCell(2).textContent=t.dispositivo;r.insertCell(3).textContent=t.linha;r.insertCell(4).textContent=t.cliente;r.insertCell(5).textContent=t.acao;r.insertCell(6).textContent=t.status;r.insertCell(7).textContent=t.observacoes;const a=r.insertCell(8);a.className="actions-cell";a.innerHTML=`<button class='row-btn client'>Cliente</button><button class='row-btn follow'>Agendar</button><button class='row-btn ok'>Restabelecido</button><button class='row-btn del'>Excluir</button>`});atualizarUltima();}
-form.onsubmit=e=>{e.preventDefault();const n={data:new Date().toLocaleString("pt-BR"),veiculo:veiculo.value.trim(),dispositivo:dispositivo.value.trim(),linha:linha.value.trim(),cliente:cliente.value.trim(),acao:acao.value,status:status.value,observacoes:observacoes.value.trim()};dados.push(n);localStorage.setItem("tratativas",JSON.stringify(dados));form.reset();render();alert("Tratativa registrada!");};
-tbody.onclick=e=>{if(!e.target.classList.contains("row-btn"))return;const i=e.target.closest("tr").rowIndex-1,t=dados[i];if(e.target.classList.contains("del")&&confirm("Excluir?")){dados.splice(i,1);localStorage.setItem("tratativas",JSON.stringify(dados));render();}else if(e.target.classList.contains("client"))msg("inicial",t);else if(e.target.classList.contains("follow"))msg("agendar",t);else if(e.target.classList.contains("ok"))msg("restabelecido",t);}
-busca.oninput=e=>render(e.target.value);
-document.getElementById("limpar-historico").onclick=()=>{if(confirm("Limpar histórico?")){dados=[];localStorage.removeItem("tratativas");render();}};
-document.getElementById("exportar-pdf").onclick=()=>{const{jsPDF}=window.jspdf;const d=new jsPDF();d.text("Relatório de Tratativas - Global Rastreamento",14,20);let y=30;dados.forEach(t=>{d.text(`${t.data} | ${t.veiculo} | ${t.cliente} | ${t.status}`,14,y);y+=6;if(y>270){d.addPage();y=20;}});d.save("tratativas_global.pdf");};
 
-const txt=document.getElementById("mensagemAutomatica"),info=document.getElementById("mensagem-info");
-function msg(tipo,t={veiculo:"[Veículo]",cliente:"[Cliente]"}){let m="";if(tipo==="inicial")m=`Olá ${t.cliente}! O veículo ${t.veiculo} está sem comunicação há mais de 24h. Poderia informar o motivo?`;if(tipo==="agendar")m=`Podemos agendar manutenção para verificar o dispositivo ${t.veiculo}.`;if(tipo==="restabelecido")m=`Comunicação do veículo ${t.veiculo} restabelecida.`;txt.value=m;info.textContent=`Mensagem tipo '${tipo}' gerada.`;}
+function render(){
+  const termo=busca.value.toLowerCase(),
+        statusF=filtroStatus.value,
+        clienteF=filtroCliente.value.toLowerCase(),
+        veiculoF=filtroVeiculo.value.toLowerCase();
+
+  tbody.innerHTML="";
+  dados.filter(d=>{
+    const condBusca=Object.values(d).some(v=>v.toLowerCase().includes(termo));
+    const condStatus=statusF?d.status===statusF:true;
+    const condCliente=clienteF?d.cliente.toLowerCase().includes(clienteF):true;
+    const condVeiculo=veiculoF?d.veiculo.toLowerCase().includes(veiculoF):true;
+    return condBusca && condStatus && condCliente && condVeiculo;
+  }).forEach((t,i)=>{
+    const r=tbody.insertRow();
+    r.insertCell(0).textContent=t.data;
+    r.insertCell(1).textContent=t.veiculo;
+    r.insertCell(2).textContent=t.dispositivo;
+    r.insertCell(3).textContent=t.linha;
+    r.insertCell(4).textContent=t.cliente;
+    r.insertCell(5).textContent=t.acao;
+    r.insertCell(6).textContent=t.status;
+    r.insertCell(7).textContent=t.observacoes;
+    const a=r.insertCell(8);
+    a.className="actions-cell";
+    a.innerHTML=`<button class='row-btn client'>Sem Comunicação</button>
+                 <button class='row-btn follow'>Agendar Suporte</button>
+                 <button class='row-btn ok'>Comunicação Normalizada</button>
+                 <button class='row-btn del'>Excluir</button>`;
+  });
+  atualizarUltima();
+}
+
+// FORMULARIO
+form.onsubmit=e=>{
+  e.preventDefault();
+  const n={data:new Date().toLocaleString("pt-BR"),
+           veiculo:veiculo.value.trim(),
+           dispositivo:dispositivo.value.trim(),
+           linha:linha.value.trim(),
+           cliente:cliente.value.trim(),
+           acao:acao.value,
+           status:status.value,
+           observacoes:observacoes.value.trim()};
+  dados.push(n);
+  localStorage.setItem("tratativas",JSON.stringify(dados));
+  form.reset();
+  render();
+  alert("Tratativa registrada!");
+};
+
+// FILTROS
+busca.oninput=render;
+filtroStatus.onchange=render;
+filtroCliente.oninput=render;
+filtroVeiculo.oninput=render;
+
+// TABELA ACTIONS
+tbody.onclick=e=>{
+  if(!e.target.classList.contains("row-btn"))return;
+  const i=e.target.closest("tr").rowIndex-1,t=dados[i];
+  if(e.target.classList.contains("del")&&confirm("Excluir?")){
+    dados.splice(i,1);
+    localStorage.setItem('tratativas',JSON.stringify(dados));
+    render();
+  } else if(e.target.classList.contains("client")) msg("inicial",t);
+  else if(e.target.classList.contains("follow")) msg("agendar",t);
+  else if(e.target.classList.contains("ok")) msg("restabelecido",t);
+};
+
+// LIMPAR HISTORICO
+document.getElementById("limpar-historico").onclick=()=>{
+  if(confirm("Limpar histórico?")){
+    dados=[];
+    localStorage.removeItem("tratativas");
+    render();
+  }
+};
+
+// PDF DETALHADO
+document.getElementById("exportar-pdf").onclick=()=>{
+  const {jsPDF}=window.jspdf;
+  const d=new jsPDF();
+  d.setFontSize(14);
+  d.text("Central de Tratativas – Global Tecnologia",14,20);
+  d.setFontSize(10);
+  let y=30;
+  dados.forEach(t=>{
+    d.text(`Data: ${t.data}`,14,y); y+=5;
+    d.text(`Veículo: ${t.veiculo} | Dispositivo: ${t.dispositivo} | Linha: ${t.linha}`,14,y); y+=5;
+    d.text(`Cliente: ${t.cliente} | Ação: ${t.acao} | Status: ${t.status}`,14,y); y+=5;
+    d.text(`Observações: ${t.observacoes}`,14,y); y+=10;
+    if(y>270){d.addPage();y=20;}
+  });
+  d.save("tratativas_global.pdf");
+};
+
+// MENSAGENS AUTOMÁTICAS
+const txt=document.getElementById("mensagemAutomatica"), info=document.getElementById("mensagem-info");
+
+function msg(tipo,t={veiculo:"[Veículo]",cliente:"[Cliente]"}){
+  let m="";
+  if(tipo==="inicial")
+    m=`Olá ${t.cliente}, tudo bem? Aqui é da Global Tecnologia.
+
+Identificamos que o dispositivo de rastreamento do veículo ${t.veiculo} está sem comunicação há mais de 24 horas.
+
+Para que possamos verificar e corrigir o mais rápido possível, poderia nos informar se ocorreu alguma das situações abaixo?
+
+1. O veículo ficou parado por longos períodos?
+2. O veículo foi totalmente desligado (bateria desconectada)?
+3. O chip foi removido ou trocado?
+4. Houve manutenção elétrica no veículo recentemente?
+5. Alguém mexeu na fiação ou painel do veículo?
+6. O veículo foi vendido ou está fora de uso?
+
+Assim que tivermos essa informação, poderemos direcionar o suporte técnico com mais agilidade.
+
+Aguardamos seu retorno.
+Global Tecnologia – Suporte Técnico`;
+
+  if(tipo==="agendar")
+    m=`Olá ${t.cliente}, tudo bem?
+
+Para darmos continuidade no suporte do veículo ${t.veiculo}, precisamos realizar uma verificação técnica.
+
+Poderia nos informar um dia e horário disponíveis para agendarmos a análise ou manutenção do equipamento?
+
+Aguardamos seu retorno.
+Global Tecnologia – Suporte Técnico`;
+
+  if(tipo==="restabelecido")
+    m=`Olá ${t.cliente}, tudo bem?
+
+Informamos que a comunicação do veículo ${t.veiculo} foi restabelecida com sucesso.
+
+Caso volte a apresentar qualquer falha ou comportamento incomum, permanecemos à disposição para auxiliar.
+
+Global Tecnologia – Suporte Técnico`;
+
+  txt.value=m;
+  info.textContent=`Mensagem tipo '${tipo}' gerada.`;
+}
+
+// BOTÕES MENSAGENS
 document.getElementById("btn-gerar-inicial").onclick=()=>msg("inicial");
 document.getElementById("btn-gerar-follow").onclick=()=>msg("agendar");
 document.getElementById("btn-gerar-rest").onclick=()=>msg("restabelecido");
-document.getElementById("copiar-mensagem").onclick=()=>{navigator.clipboard.writeText(txt.value);alert("Mensagem copiada!");};
+
+// COPIAR MENSAGEM
+document.getElementById("copiar-mensagem").onclick=()=>{
+  navigator.clipboard.writeText(txt.value);
+  alert("Mensagem copiada!");
+};
+
 render();
 });
 </script>
 </body>
 </html>
-  <div class="container">
-    <header>
-      <div>
-        <h1>Assistente Virtual Daniel Ibraim — Tratativa de dispositivos offline</h1>
-        <div class="muted">Fluxo: detectar > enviar reset SMS > reset SIM > contatar cliente > registrar resultado</div>
-      </div>
-      <div>
-        <button id="runScan">Verificar offline agora</button>
-      </div>
-    </header>
-
-    <div class="grid cols-3">
-      <div class="card">
-        <h3>Cadastro / Dispositivos</h3>
-        <div style="margin-bottom:8px" class="muted small">Adicione dispositivos e informe o último "last seen" (data/hora).</div>
-        <label>Placa / Identificador</label>
-        <input id="deviceIdInput" placeholder="Ex: ABC1D23" />
-        <label>IMEI / ID</label>
-        <input id="imeiInput" placeholder="Ex: 868123456789012" />
-        <label>Número da linha (chip)</label>
-        <input id="simInput" placeholder="Ex: 75999998888" />
-        <label>Contato do cliente</label>
-        <input id="contactInput" placeholder="Ex: 75988887777" />
-        <label>Último contato (YYYY-MM-DD HH:MM)</label>
-        <input id="lastSeenInput" placeholder="2025-10-13 14:25" />
-        <div style="display:flex;gap:8px;margin-top:10px">
-          <button id="addDeviceBtn">Adicionar / Atualizar</button>
-          <button id="clearAll" class="ghost">Limpar tudo</button>
-        </div>
-        <hr />
-        <div class="small muted">Exportar / importar</div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-          <button id="exportCsv" class="ghost">Exportar CSV</button>
-          <button id="importSample" class="ghost">Importar exemplo</button>
-        </div>
-      </div>
-
-      <div class="card" id="scanCard">
-        <h3>Dispositivos offline (mais de 24h)</h3>
-        <div id="offlineList" style="max-height:420px;overflow:auto"></div>
-      </div>
-
-      <div class="card">
-        <h3>Log de tratativas</h3>
-        <div id="logList" style="max-height:420px;overflow:auto"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Histórico completo dos dispositivos</h3>
-      <table>
-        <thead><tr><th>Placa</th><th>IMEI</th><th>Último contato</th><th>Status</th><th>Ações</th></tr></thead>
-        <tbody id="devicesTable"></tbody>
-      </table>
-    </div>
-
-    <footer class="muted">Use como protótipo: integrações reais (SMS, API da plataforma e operadora) podem ser ligadas aos pontos marcados como "Simulado".</footer>
-  </div>
-
-  <script>
-    const DEV_KEY = 'gr_devices_v1';
-    const LOG_KEY = 'gr_logs_v1';
-
-    const FACILITA_USER = 'daniel02';
-    const FACILITA_PASS = '486245pcj';
-    const FACILITA_SENDER = '55981243015';
-
-    function loadDevices(){ try{ return JSON.parse(localStorage.getItem(DEV_KEY)||'[]') }catch(e){return[]} }
-    function saveDevices(arr){ localStorage.setItem(DEV_KEY, JSON.stringify(arr)) }
-    function loadLogs(){ try{ return JSON.parse(localStorage.getItem(LOG_KEY)||'[]') }catch(e){return[]} }
-    function saveLogs(arr){ localStorage.setItem(LOG_KEY, JSON.stringify(arr)) }
-
-    function pushLog(obj){ const logs = loadLogs(); const entry = {when:obj.when||new Date().toISOString(), deviceId:obj.deviceId, actionType:obj.actionType||'Ação', result:obj.result||'', notes:obj.notes||''}; logs.push(entry); saveLogs(logs); renderLogs(); }
-
-    async function sendSmsViaFacilita(to, message){
-      const url = `http://api.facilitamovel.com.br/api/dlrByExternalKeyJson.ft?user=${FACILITA_USER}&pass=${FACILITA_PASS}&to=${to}&msg=${encodeURIComponent(message)}&from=${FACILITA_SENDER}`;
-      try{
-        const resp = await fetch(url);
-        const data = await resp.json();
-        if(data.status && data.status.toLowerCase()=='ok'){
-          return 'Enviado';
-        } else {
-          console.error('Erro Facilita:', data);
-          return 'Erro';
-        }
-      }catch(e){
-        console.error('Erro envio SMS:', e);
-        return 'Erro';
-      }
-    }
-
-    async function simulateSendSms(deviceId){
-      const escolha = prompt('Digite 1 para enviar RESET ou 2 para enviar mensagem ao cliente');
-      const dev = loadDevices().find(d=>d.id===deviceId);
-      if(!dev){ alert('Dispositivo não encontrado'); return; }
-      const destino = dev.contact.startsWith('55') ? dev.contact : '55'+dev.contact;
-     
