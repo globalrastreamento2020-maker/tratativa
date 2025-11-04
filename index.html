@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Central de Tratativas – Global Tecnologia</title>
+<title>Central de Tratativas – Global Tecnologia (v3)</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -50,6 +50,8 @@ tr:nth-child(even){background:#121829;}
 .row-btn.follow{background:var(--blue);color:#fff;}
 .row-btn.ok{background:var(--green);color:#fff;}
 .row-btn.del{background:var(--danger);color:#fff;}
+.row-btn.cmd-reset{background:#ff4d4d;color:#fff;}
+.row-btn.cmd-maint{background:#2ecc71;color:#fff;}
 .mensagens-panel{margin-top:16px;border-radius:10px;padding:12px;background:#1a1f2e;display:grid;grid-template-columns:1fr 220px;gap:12px;}
 .mensagens-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;}
 .mensagens-area textarea{width:100%;min-height:100px;padding:10px;border-radius:8px;border:1px solid #333;background:#0b0f1a;color:var(--text);}
@@ -60,84 +62,143 @@ tr:nth-child(even){background:#121829;}
 .login-box input{width:100%;padding:10px;border-radius:8px;margin-bottom:12px;border:1px solid #333;background:#1a1f2e;color:var(--text);}
 .whatsapp{position:fixed;bottom:20px;right:20px;background:#25d366;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 10px #000;}
 .whatsapp img{width:35px;height:35px;}
-@media(max-width:880px){form{grid-template-columns:1fr}.mensagens-panel{grid-template-columns:1fr;}}
+
+/* Histórico de SMS */
+.sms-log-section{
+  margin-top:18px;
+  padding:14px;
+  border-radius:10px;
+  background:#101522;
+}
+.sms-log-section h2{
+  font-size:1.1rem;
+  color:var(--yellow);
+  margin-bottom:8px;
+}
+.sms-log-info{
+  font-size:0.8rem;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+
+/* Status coloridos */
+.status-entregue{
+  color:#2ecc71;
+  font-weight:700;
+}
+.status-pendente{
+  color:#f1c40f;
+  font-weight:700;
+}
+.status-erro{
+  color:#e74c3c;
+  font-weight:700;
+}
+.status-desconhecido{
+  color:#bdc3c7;
+  font-weight:700;
+}
+
+@media(max-width:880px){
+  form{grid-template-columns:1fr}
+  .mensagens-panel{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
 <div class="login-box" id="loginBox">
-<h2>Login - Global Tecnologia</h2>
-<p style="font-size:0.9rem;color:var(--muted)">Acesse pelo navegador:<br><b>file:///C:/painel.html</b></p>
-<input type="text" id="user" placeholder="Usuário">
-<input type="password" id="pass" placeholder="Senha">
-<button class="btn primary" onclick="login()">Entrar</button>
-<p style="margin-top:10px;font-size:0.85rem;color:var(--muted)">Usuário: <b>admin</b> | Senha: <b>1234</b></p>
+  <h2>Login - Global Tecnologia</h2>
+  <p style="font-size:0.9rem;color:var(--muted)">Acesse pelo navegador:<br><b>file:///C:/painel.html</b></p>
+  <input type="text" id="user" placeholder="Usuário">
+  <input type="password" id="pass" placeholder="Senha">
+  <button class="btn primary" onclick="login()">Entrar</button>
+  <p style="margin-top:10px;font-size:0.85rem;color:var(--muted)">Usuário: <b>admin</b> | Senha: <b>1234</b></p>
 </div>
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div class="container" id="painel">
-<header>Central de Tratativas – Global Tecnologia</header>
+<header>Central de Tratativas – Global Tecnologia (v3)</header>
 
 <div class="guia-operacional">
-<h2>Procedimento Operacional</h2>
-<ol>
-<li>Registrar veículos sem comunicação (+24h).</li>
-<li>Anotar placa, cliente, chip, IMEI e data/hora.</li>
-<li>Mensagem padrão enviada ao cliente para coleta de informações.</li>
-<li>Registrar retorno do cliente e ação técnica.</li>
-</ol>
+  <h2>Procedimento Operacional</h2>
+  <ol>
+    <li>Registrar veículos sem comunicação (+24h).</li>
+    <li>Anotar placa, cliente, chip, IMEI e data/hora.</li>
+    <li>Mensagem padrão enviada ao cliente / licenciado.</li>
+    <li>Registrar retorno do cliente e ação técnica.</li>
+  </ol>
 </div>
 
 <h1>Gestão de Tratativas</h1>
 
 <div class="form-actions">
-<button class="btn primary" id="exportar-pdf">Exportar PDF Detalhado</button>
-<button class="btn danger" id="limpar-historico">Limpar Histórico</button>
+  <button class="btn primary" id="exportar-pdf">Exportar PDF Tratativas</button>
+  <button class="btn danger" id="limpar-historico">Limpar Histórico</button>
 </div>
 
 <form id="tratativa-form">
-<div><label>Placa / Veículo</label><input id="veiculo" required></div>
-<div><label>Dispositivo (IMEI)</label><input id="dispositivo" required></div>
-<div><label>Número do Chip</label><input id="linha" required></div>
-<div><label>Cliente</label><input id="cliente" required></div>
-<div><label>Ação Tomada</label>
-<select id="acao" required>
-<option value="">Selecione...</option>
-<option>Reset via SMS</option>
-<option>Reset do Chip</option>
-<option>Contato com Cliente</option>
-<option>Outros</option>
-</select></div>
-<div><label>Status</label>
-<select id="status" required>
-<option value="">Selecione...</option>
-<option>Resolvido</option>
-<option>Pendente</option>
-<option>Aguardando Retorno</option>
-</select></div>
-<div class="full"><label>Observações</label><textarea id="observacoes"></textarea></div>
-<div class="form-actions full">
-<button type="submit" class="btn primary">Registrar</button>
-<a href="https://smartmanager2.smartsim.com.br/" target="_blank" class="btn ghost">SmartSim</a>
-<a href="https://veye.com.br/veye/dispositivos" target="_blank" class="btn ghost">Veye</a>
-<a href="https://app.brcaptura.com.br/login" target="_blank" class="btn ghost">BR Captura</a>
-</div>
+  <div><label>Placa / Veículo</label><input id="veiculo" required></div>
+  <div><label>Dispositivo (IMEI)</label><input id="dispositivo" required></div>
+  <div><label>Número do Chip</label><input id="linha" required></div>
+  <div><label>Cliente / Licenciado</label><input id="cliente" required></div>
+  <div>
+    <label>Ação Tomada</label>
+    <select id="acao" required>
+      <option value="">Selecione...</option>
+      <option>Reset via SMS</option>
+      <option>Reset do Chip</option>
+      <option>Contato com Cliente</option>
+      <option>Outros</option>
+    </select>
+  </div>
+  <div>
+    <label>Status</label>
+    <select id="status" required>
+      <option value="">Selecione...</option>
+      <option>Resolvido</option>
+      <option>Pendente</option>
+      <option>Aguardando Retorno</option>
+    </select>
+  </div>
+  <div class="full">
+    <label>Observações</label>
+    <textarea id="observacoes"></textarea>
+  </div>
+  <div class="form-actions full">
+    <button type="submit" class="btn primary">Registrar</button>
+    <a href="https://smartmanager2.smartsim.com.br/" target="_blank" class="btn ghost">SmartSim</a>
+    <a href="https://veye.com.br/veye/dispositivos" target="_blank" class="btn ghost">Veye</a>
+    <a href="https://app.brcaptura.com.br/login" target="_blank" class="btn ghost">BR Captura</a>
+  </div>
 </form>
 
 <!-- Filtros Avançados -->
 <div class="form-actions full">
-<input id="busca" placeholder="Pesquisar...">
-<select id="filtro-status"><option value="">Filtrar por Status</option><option>Resolvido</option><option>Pendente</option><option>Aguardando Retorno</option></select>
-<input id="filtro-cliente" placeholder="Filtrar por Cliente">
-<input id="filtro-veiculo" placeholder="Filtrar por Veículo">
+  <input id="busca" placeholder="Pesquisar...">
+  <select id="filtro-status">
+    <option value="">Filtrar por Status</option>
+    <option>Resolvido</option>
+    <option>Pendente</option>
+    <option>Aguardando Retorno</option>
+  </select>
+  <input id="filtro-cliente" placeholder="Filtrar por Cliente / Licenciado">
+  <input id="filtro-veiculo" placeholder="Filtrar por Veículo">
 </div>
 
 <table id="tratativas-tabela">
 <thead>
 <tr>
-<th>Data</th><th>Veículo</th><th>Dispositivo</th><th>Linha</th>
-<th>Cliente</th><th>Ação</th><th>Status</th><th>Observações</th><th>Ações</th>
+  <th>Data</th>
+  <th>Veículo</th>
+  <th>Dispositivo</th>
+  <th>Linha</th>
+  <th>Cliente / Licenciado</th>
+  <th>Ação</th>
+  <th>Status</th>
+  <th>Observações</th>
+  <th>Ações</th>
 </tr>
 </thead>
 <tbody></tbody>
@@ -145,24 +206,52 @@ tr:nth-child(even){background:#121829;}
 
 <!-- Mensagens Automáticas -->
 <div class="mensagens-panel">
-<div class="mensagens-area">
-<div class="mensagens-actions">
-<button class="btn secondary" id="btn-gerar-inicial">Sem Comunicação</button>
-<button class="btn primary" id="btn-gerar-follow">Agendar Suporte</button>
-<button class="btn green" id="btn-gerar-rest">Comunicação Normalizada</button>
+  <div class="mensagens-area">
+    <div class="mensagens-actions">
+      <button class="btn secondary" id="btn-gerar-inicial">Sem Comunicação</button>
+      <button class="btn primary" id="btn-gerar-follow">Agendar Suporte</button>
+      <button class="btn green" id="btn-gerar-rest">Comunicação Normalizada</button>
+    </div>
+    <textarea id="mensagemAutomatica" readonly></textarea>
+    <button class="copy-btn" id="copiar-mensagem">Copiar Mensagem</button>
+    <div class="msg-info" id="mensagem-info">Nenhuma mensagem gerada.</div>
+  </div>
+  <div>
+    <strong>Última tratativa</strong>
+    <div id="ultima-tratativa" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">— nenhuma —</div>
+  </div>
 </div>
-<textarea id="mensagemAutomatica" readonly></textarea>
-<button class="copy-btn" id="copiar-mensagem">Copiar Mensagem</button>
-<div class="msg-info" id="mensagem-info">Nenhuma mensagem gerada.</div>
-</div>
-<div>
-<strong>Última tratativa</strong>
-<div id="ultima-tratativa" style="margin-top:8px;font-size:0.9rem;color:var(--muted)">— nenhuma —</div>
-</div>
+
+<!-- Histórico de SMS -->
+<div class="sms-log-section">
+  <h2>Histórico de Envios SMS (Mensagens e Comandos)</h2>
+  <div class="sms-log-info">
+    Todos os envios via Facilita Móvel são salvos localmente.  
+    Você pode exportar um relatório em PDF dos SMS enviados ou atualizar o status pela API.
+  </div>
+  <div class="form-actions">
+    <button class="btn green" id="atualizar-status-sms">Atualizar Status SMS</button>
+    <button class="btn primary" id="exportar-pdf-sms">Exportar PDF SMS</button>
+    <button class="btn danger" id="limpar-log-sms">Limpar Log SMS</button>
+  </div>
+  <table id="sms-log-tabela">
+    <thead>
+      <tr>
+        <th>Data/Hora</th>
+        <th>Tipo</th>
+        <th>Veículo</th>
+        <th>Cliente</th>
+        <th>Chip</th>
+        <th>SMSID</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 
 <a class="whatsapp" href="https://wa.me/5575988190527" target="_blank" title="Fale conosco no WhatsApp">
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -177,19 +266,230 @@ function login(){
   }else alert("Usuário ou senha incorretos!");
 }
 
-// APP
 document.addEventListener('DOMContentLoaded',()=>{
+
+// ================== CONFIG FACILITA MÓVEL ==================
+const FM_USER = "daniel02";               // seu usuário Facilita Móvel
+const FM_PASS = "486245pcj";              // sua senha Facilita Móvel
+const FM_URL  = "https://api.facilitamovel.com.br/api/simpleSendJson.ft";
+const FM_DLR_URL = "https://api.facilitamovel.com.br/api/dlrStatusJson.ft";
+
+// Logs de SMS (mensagens + comandos)
+let smsLogs = JSON.parse(localStorage.getItem("smsLogs")) || [];
+
+// Persistir log no localStorage
+function salvarLogs(){
+  localStorage.setItem("smsLogs", JSON.stringify(smsLogs));
+}
+
+// Classe CSS de status (cor)
+function getStatusClass(log){
+  if(typeof log.dlrStatus === "number"){
+    if(log.dlrStatus === 4) return "status-entregue";
+    if(log.dlrStatus === 5) return "status-erro";
+    if(log.dlrStatus === 1 || log.dlrStatus === 2 || log.dlrStatus === 3) return "status-pendente";
+  }
+  if(log.status && /erro|falha/i.test(log.status)) return "status-erro";
+  return "status-desconhecido";
+}
+
+// Renderizar tabela de logs SMS
+function renderSmsLogs(){
+  const tbodyLog = document.querySelector("#sms-log-tabela tbody");
+  tbodyLog.innerHTML = "";
+  smsLogs.forEach(log=>{
+    const tr = tbodyLog.insertRow();
+    tr.insertCell(0).textContent = log.dataHora;
+    tr.insertCell(1).textContent = log.tipo;
+    tr.insertCell(2).textContent = log.veiculo || "";
+    tr.insertCell(3).textContent = log.cliente || "";
+    tr.insertCell(4).textContent = log.linha || "";
+    tr.insertCell(5).textContent = log.smsid || "-";
+    const tdStatus = tr.insertCell(6);
+    tdStatus.textContent = log.status || "";
+    tdStatus.className = getStatusClass(log);
+  });
+}
+
+// Envio genérico de SMS via Facilita Móvel com LOG
+async function enviarSMS(numeroBruto, mensagem, externalId, tipo, contexto){
+  try{
+    if(!numeroBruto){
+      alert("Número de chip não informado.");
+      return;
+    }
+    if(!mensagem || !mensagem.trim()){
+      alert("Mensagem vazia, nada para enviar.");
+      return;
+    }
+
+    // limpa dígitos e ajusta para 55 + DDD + número
+    let num = numeroBruto.replace(/\D/g,"");
+    if(!num){
+      alert("Número de chip inválido.");
+      return;
+    }
+    if(!num.startsWith("55")) num = "55"+num;
+
+    const payload = {
+      phone: num,
+      message: mensagem,
+      externalkey: externalId || String(Date.now()),
+      flashsms: "0"
+    };
+
+    const agora = new Date().toLocaleString("pt-BR");
+    let logItem = {
+      dataHora: agora,
+      tipo: tipo || "desconhecido",
+      veiculo: contexto?.veiculo || "",
+      cliente: contexto?.cliente || "",
+      linha: numeroBruto,
+      dispositivo: contexto?.dispositivo || externalId || "",
+      smsid: "",
+      status: "Enviando...",
+      dlrStatus: null
+    };
+
+    const resp = await fetch(FM_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "user":FM_USER,
+        "password":FM_PASS
+      },
+      body:JSON.stringify(payload)
+    });
+
+    if(!resp.ok){
+      logItem.status = "Erro HTTP "+resp.status;
+      smsLogs.push(logItem);
+      salvarLogs();
+      renderSmsLogs();
+      alert("Falha na comunicação com a API de SMS (HTTP "+resp.status+").");
+      return;
+    }
+
+    const data = await resp.json().catch(()=>null);
+    console.log("Retorno Facilita Móvel (envio):", data);
+
+    if(data && data.result === "success" && (data.code === "1" || data.code === "2")){
+      logItem.smsid = data.smsid || "";
+      logItem.status = (data.description || "Enviado (API OK)") + (logItem.smsid ? " | SMSID: "+logItem.smsid : "");
+      alert("SMS enviado / aceito pela API!");
+    }else{
+      let msgErro = data && data.description ? data.description : "Verifique usuário/senha, saldo ou formato da mensagem.";
+      logItem.status = "Falha: "+msgErro;
+      alert("Não foi possível enviar o SMS.\nDetalhes: "+msgErro);
+    }
+
+    smsLogs.push(logItem);
+    salvarLogs();
+    renderSmsLogs();
+
+  }catch(e){
+    console.error(e);
+    let logItemErro = {
+      dataHora: new Date().toLocaleString("pt-BR"),
+      tipo: tipo || "desconhecido",
+      veiculo: contexto?.veiculo || "",
+      cliente: contexto?.cliente || "",
+      linha: numeroBruto,
+      dispositivo: contexto?.dispositivo || externalId || "",
+      smsid: "",
+      status: "Erro JS: "+e.message,
+      dlrStatus: null
+    };
+    smsLogs.push(logItemErro);
+    salvarLogs();
+    renderSmsLogs();
+    alert("Erro ao tentar enviar SMS. Veja o console para mais detalhes.");
+  }
+}
+
+// Consultar status de TODOS SMS com smsid
+async function atualizarStatusSmsTodos(){
+  const logsComId = smsLogs.filter(l => l.smsid);
+  if(!logsComId.length){
+    alert("Nenhum SMS com SMSID para consultar.");
+    return;
+  }
+
+  for(const log of logsComId){
+    try{
+      const payload = { smsid: String(log.smsid) };
+      const resp = await fetch(FM_DLR_URL,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "user":FM_USER,
+          "password":FM_PASS
+        },
+        body:JSON.stringify(payload)
+      });
+
+      if(!resp.ok){
+        log.status = "Erro DLR HTTP "+resp.status;
+        continue;
+      }
+
+      const data = await resp.json().catch(()=>null);
+      console.log("Retorno Facilita Móvel (DLR):", data);
+
+      if(data && data.result === "success" && data.code === "1"){
+        log.dlrStatus = typeof data.status === "number" ? data.status : parseInt(data.status,10);
+        log.status = (data.description || "Status atualizado") + (log.dlrStatus ? " (status "+log.dlrStatus+")" : "");
+      }else if(data){
+        log.status = "DLR falhou: "+(data.description || "erro");
+      }else{
+        log.status = "DLR: resposta vazia";
+      }
+
+    }catch(e){
+      console.error(e);
+      log.status = "Erro JS DLR: "+e.message;
+    }
+  }
+
+  salvarLogs();
+  renderSmsLogs();
+  alert("Status dos SMS atualizado (consulta DLR).");
+}
+
+// Escolha de comando de reset por modelo
+function escolherComandoReset(){
+  const op = prompt(
+    "Escolha o comando de RESET conforme o modelo:\n\n"+
+    "1 - TK 311E / GT02  -> reset123456\n"+
+    "2 - J16 / J14       -> RESET#\n"+
+    "3 - GT06 Acurat     -> #reboot#123456#\n\n"+
+    "Digite 1, 2 ou 3:"
+  );
+  if(op==="1") return "reset123456";
+  if(op==="2") return "RESET#";
+  if(op==="3") return "#reboot#123456#";
+  alert("Opção inválida ou cancelada.");
+  return null;
+}
+
+// ================== APP ORIGINAL + INTEGRAÇÃO ==================
 const form=document.getElementById('tratativa-form'),
       tbody=document.querySelector('#tratativas-tabela tbody'),
       busca=document.getElementById('busca'),
       filtroStatus=document.getElementById('filtro-status'),
       filtroCliente=document.getElementById('filtro-cliente'),
       filtroVeiculo=document.getElementById('filtro-veiculo'),
-      ultima=document.getElementById('ultima-tratativa');
+      ultima=document.getElementById('ultima-tratativa'),
+      txt=document.getElementById("mensagemAutomatica"),
+      info=document.getElementById("mensagem-info");
 
 let dados=JSON.parse(localStorage.getItem('tratativas'))||[];
 
-function atualizarUltima(){ultima.textContent=dados.length?`${dados.at(-1).data} | ${dados.at(-1).veiculo} | ${dados.at(-1).cliente}`:"— nenhuma —";}
+function atualizarUltima(){
+  ultima.textContent=dados.length
+    ? `${dados.at(-1).data} | ${dados.at(-1).veiculo} | ${dados.at(-1).cliente}`
+    : "— nenhuma —";
+}
 
 function render(){
   const termo=busca.value.toLowerCase(),
@@ -198,43 +498,51 @@ function render(){
         veiculoF=filtroVeiculo.value.toLowerCase();
 
   tbody.innerHTML="";
-  dados.filter(d=>{
-    const condBusca=Object.values(d).some(v=>v.toLowerCase().includes(termo));
-    const condStatus=statusF?d.status===statusF:true;
-    const condCliente=clienteF?d.cliente.toLowerCase().includes(clienteF):true;
-    const condVeiculo=veiculoF?d.veiculo.toLowerCase().includes(veiculoF):true;
-    return condBusca && condStatus && condCliente && condVeiculo;
-  }).forEach((t,i)=>{
-    const r=tbody.insertRow();
-    r.insertCell(0).textContent=t.data;
-    r.insertCell(1).textContent=t.veiculo;
-    r.insertCell(2).textContent=t.dispositivo;
-    r.insertCell(3).textContent=t.linha;
-    r.insertCell(4).textContent=t.cliente;
-    r.insertCell(5).textContent=t.acao;
-    r.insertCell(6).textContent=t.status;
-    r.insertCell(7).textContent=t.observacoes;
-    const a=r.insertCell(8);
-    a.className="actions-cell";
-    a.innerHTML=`<button class='row-btn client'>Sem Comunicação</button>
-                 <button class='row-btn follow'>Agendar Suporte</button>
-                 <button class='row-btn ok'>Comunicação Normalizada</button>
-                 <button class='row-btn del'>Excluir</button>`;
-  });
+  dados
+    .filter(d=>{
+      const valores = Object.values(d).map(v=>String(v).toLowerCase());
+      const condBusca = termo ? valores.some(v=>v.includes(termo)) : true;
+      const condStatus=statusF?d.status===statusF:true;
+      const condCliente=clienteF?d.cliente.toLowerCase().includes(clienteF):true;
+      const condVeiculo=veiculoF?d.veiculo.toLowerCase().includes(veiculoF):true;
+      return condBusca && condStatus && condCliente && condVeiculo;
+    })
+    .forEach((t,i)=>{
+      const r=tbody.insertRow();
+      r.insertCell(0).textContent=t.data;
+      r.insertCell(1).textContent=t.veiculo;
+      r.insertCell(2).textContent=t.dispositivo;
+      r.insertCell(3).textContent=t.linha;
+      r.insertCell(4).textContent=t.cliente;
+      r.insertCell(5).textContent=t.acao;
+      r.insertCell(6).textContent=t.status;
+      r.insertCell(7).textContent=t.observacoes;
+      const a=r.insertCell(8);
+      a.className="actions-cell";
+      a.innerHTML=
+        "<button class='row-btn client'>Sem Comunicação</button>"+
+        "<button class='row-btn follow'>Agendar Suporte</button>"+
+        "<button class='row-btn ok'>Comunicação Normalizada</button>"+
+        "<button class='row-btn cmd-reset'>Resetar Rastreador</button>"+
+        "<button class='row-btn cmd-maint'>Manter Equipamento</button>"+
+        "<button class='row-btn del'>Excluir</button>";
+    });
   atualizarUltima();
 }
 
-// FORMULARIO
+// FORMULÁRIO
 form.onsubmit=e=>{
   e.preventDefault();
-  const n={data:new Date().toLocaleString("pt-BR"),
-           veiculo:veiculo.value.trim(),
-           dispositivo:dispositivo.value.trim(),
-           linha:linha.value.trim(),
-           cliente:cliente.value.trim(),
-           acao:acao.value,
-           status:status.value,
-           observacoes:observacoes.value.trim()};
+  const n={
+    data:new Date().toLocaleString("pt-BR"),
+    veiculo:veiculo.value.trim(),
+    dispositivo:dispositivo.value.trim(),
+    linha:linha.value.trim(),
+    cliente:cliente.value.trim(),
+    acao:acao.value,
+    status:status.value,
+    observacoes:observacoes.value.trim()
+  };
   dados.push(n);
   localStorage.setItem("tratativas",JSON.stringify(dados));
   form.reset();
@@ -248,50 +556,8 @@ filtroStatus.onchange=render;
 filtroCliente.oninput=render;
 filtroVeiculo.oninput=render;
 
-// TABELA ACTIONS
-tbody.onclick=e=>{
-  if(!e.target.classList.contains("row-btn"))return;
-  const i=e.target.closest("tr").rowIndex-1,t=dados[i];
-  if(e.target.classList.contains("del")&&confirm("Excluir?")){
-    dados.splice(i,1);
-    localStorage.setItem('tratativas',JSON.stringify(dados));
-    render();
-  } else if(e.target.classList.contains("client")) msg("inicial",t);
-  else if(e.target.classList.contains("follow")) msg("agendar",t);
-  else if(e.target.classList.contains("ok")) msg("restabelecido",t);
-};
-
-// LIMPAR HISTORICO
-document.getElementById("limpar-historico").onclick=()=>{
-  if(confirm("Limpar histórico?")){
-    dados=[];
-    localStorage.removeItem("tratativas");
-    render();
-  }
-};
-
-// PDF DETALHADO
-document.getElementById("exportar-pdf").onclick=()=>{
-  const {jsPDF}=window.jspdf;
-  const d=new jsPDF();
-  d.setFontSize(14);
-  d.text("Central de Tratativas – Global Tecnologia",14,20);
-  d.setFontSize(10);
-  let y=30;
-  dados.forEach(t=>{
-    d.text(`Data: ${t.data}`,14,y); y+=5;
-    d.text(`Veículo: ${t.veiculo} | Dispositivo: ${t.dispositivo} | Linha: ${t.linha}`,14,y); y+=5;
-    d.text(`Cliente: ${t.cliente} | Ação: ${t.acao} | Status: ${t.status}`,14,y); y+=5;
-    d.text(`Observações: ${t.observacoes}`,14,y); y+=10;
-    if(y>270){d.addPage();y=20;}
-  });
-  d.save("tratativas_global.pdf");
-};
-
-// MENSAGENS AUTOMÁTICAS
-const txt=document.getElementById("mensagemAutomatica"), info=document.getElementById("mensagem-info");
-
-function msg(tipo,t={veiculo:"[Veículo]",cliente:"[Cliente]"}){
+// Geração de mensagens automáticas
+function msg(tipo,t={veiculo:"[Veículo]",cliente:"[Cliente / Licenciado]"}){
   let m="";
   if(tipo==="inicial")
     m=`Olá ${t.cliente}, tudo bem? Aqui é da Global Tecnologia.
@@ -333,20 +599,161 @@ Global Tecnologia – Suporte Técnico`;
 
   txt.value=m;
   info.textContent=`Mensagem tipo '${tipo}' gerada.`;
+  return m;
 }
 
-// BOTÕES MENSAGENS
+// BOTÕES DO PAINEL DE MENSAGENS
 document.getElementById("btn-gerar-inicial").onclick=()=>msg("inicial");
 document.getElementById("btn-gerar-follow").onclick=()=>msg("agendar");
 document.getElementById("btn-gerar-rest").onclick=()=>msg("restabelecido");
 
 // COPIAR MENSAGEM
 document.getElementById("copiar-mensagem").onclick=()=>{
-  navigator.clipboard.writeText(txt.value);
+  navigator.clipboard.writeText(txt.value||"");
   alert("Mensagem copiada!");
 };
 
+// AÇÕES NA TABELA (envio SMS e comandos)
+tbody.onclick=e=>{
+  if(!e.target.classList.contains("row-btn"))return;
+  const linhaTabela=e.target.closest("tr");
+  const idx=linhaTabela.rowIndex-1;
+  const t=dados[idx];
+
+  if(e.target.classList.contains("del")){
+    if(confirm("Excluir esta tratativa?")){
+      dados.splice(idx,1);
+      localStorage.setItem('tratativas',JSON.stringify(dados));
+      render();
+    }
+    return;
+  }
+
+  const contexto = {
+    veiculo: t.veiculo,
+    cliente: t.cliente,
+    dispositivo: t.dispositivo
+  };
+
+  // Mensagem Sem Comunicação
+  if(e.target.classList.contains("client")){
+    const texto = msg("inicial",t);
+    if(confirm("Deseja enviar esta mensagem por SMS para o número do chip cadastrado?")){
+      enviarSMS(t.linha, texto, t.dispositivo, "sem-comunicacao", contexto);
+    }
+    return;
+  }
+
+  // Mensagem Agendar Suporte
+  if(e.target.classList.contains("follow")){
+    const texto = msg("agendar",t);
+    if(confirm("Deseja enviar esta mensagem por SMS para o número do chip cadastrado?")){
+      enviarSMS(t.linha, texto, t.dispositivo, "agendar-suporte", contexto);
+    }
+    return;
+  }
+
+  // Mensagem Comunicação Normalizada
+  if(e.target.classList.contains("ok")){
+    const texto = msg("restabelecido",t);
+    if(confirm("Deseja enviar esta mensagem por SMS para o número do chip cadastrado?")){
+      enviarSMS(t.linha, texto, t.dispositivo, "comunicacao-normalizada", contexto);
+    }
+    return;
+  }
+
+  // Comando de RESET
+  if(e.target.classList.contains("cmd-reset")){
+    const cmd = escolherComandoReset();
+    if(cmd){
+      if(confirm(`Enviar o comando de RESET '${cmd}' para o veículo ${t.veiculo} (linha ${t.linha})?`)){
+        enviarSMS(t.linha, cmd, t.dispositivo, "reset-rastreador", contexto);
+      }
+    }
+    return;
+  }
+
+  // Comando para manutenção / verificação
+  if(e.target.classList.contains("cmd-maint")){
+    const cmd = prompt(
+      "Informe o comando SMS para manutenção / verificação do rastreador:\n\n"+
+      "(ex.: CHECK#, PING#, status123456, etc.)"
+    );
+    if(cmd && cmd.trim()){
+      const c = cmd.trim();
+      if(confirm(`Enviar o comando '${c}' para o veículo ${t.veiculo} (linha ${t.linha})?`)){
+        enviarSMS(t.linha, c, t.dispositivo, "manutencao", contexto);
+      }
+    }
+    return;
+  }
+};
+
+// LIMPAR HISTÓRICO DE TRATATIVAS
+document.getElementById("limpar-historico").onclick=()=>{
+  if(confirm("Limpar todo o histórico de tratativas?")){
+    dados=[];
+    localStorage.removeItem("tratativas");
+    render();
+  }
+};
+
+// PDF DETALHADO DAS TRATATIVAS
+document.getElementById("exportar-pdf").onclick=()=>{
+  const {jsPDF}=window.jspdf;
+  const d=new jsPDF();
+  d.setFontSize(14);
+  d.text("Central de Tratativas – Global Tecnologia",14,20);
+  d.setFontSize(10);
+  let y=30;
+  dados.forEach(t=>{
+    d.text(`Data: ${t.data}`,14,y); y+=5;
+    d.text(`Veículo: ${t.veiculo} | Dispositivo: ${t.dispositivo} | Linha: ${t.linha}`,14,y); y+=5;
+    d.text(`Cliente/Licenciado: ${t.cliente} | Ação: ${t.acao} | Status: ${t.status}`,14,y); y+=5;
+    d.text(`Observações: ${t.observacoes}`,14,y); y+=10;
+    if(y>270){d.addPage();y=20;}
+  });
+  d.save("tratativas_global.pdf");
+};
+
+// PDF DO HISTÓRICO DE SMS
+document.getElementById("exportar-pdf-sms").onclick=()=>{
+  const {jsPDF}=window.jspdf;
+  const d=new jsPDF();
+  d.setFontSize(14);
+  d.text("Histórico de Envios SMS – Global Tecnologia",14,20);
+  d.setFontSize(10);
+  let y=30;
+
+  smsLogs.forEach(log=>{
+    d.text(`Data/Hora: ${log.dataHora}`,14,y); y+=5;
+    d.text(`Tipo: ${log.tipo} | Veículo: ${log.veiculo} | Cliente: ${log.cliente}`,14,y); y+=5;
+    d.text(`Chip: ${log.linha} | Dispositivo: ${log.dispositivo}`,14,y); y+=5;
+    d.text(`SMSID: ${log.smsid || "-"} | Status: ${log.status}`,14,y); y+=10;
+    if(y>270){d.addPage();y=20;}
+  });
+
+  d.save("sms_global.pdf");
+};
+
+// LIMPAR LOG DE SMS
+document.getElementById("limpar-log-sms").onclick=()=>{
+  if(confirm("Limpar todo o histórico de SMS?")){
+    smsLogs=[];
+    salvarLogs();
+    renderSmsLogs();
+  }
+};
+
+// BOTÃO ATUALIZAR STATUS SMS
+document.getElementById("atualizar-status-sms").onclick=()=>{
+  atualizarStatusSmsTodos();
+};
+
+// Render inicial
 render();
+renderSmsLogs();
+
 });
 </script>
 </body>
